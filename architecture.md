@@ -17,6 +17,7 @@ Cross-host layering guide for LunaToon. Normative field rules live in
 
 - Keep a portable shading and material contract that Unity (and future hosts) can implement.
 - Separate normative behavior from engine-specific shader code, inspectors, and packaging.
+- Support Unity BIRP and URP as equal hosts via sibling ShaderLab assets and shared HLSL.
 - Allow draft iteration without pretending a released standard exists yet.
 
 ## Layers
@@ -28,24 +29,26 @@ flowchart TB
   features[specs/features capabilities]
   fragments[specs/fragments shared pieces]
   impl[Host implementations]
-  unity[LunaToon Unity URP]
+  unityBirp[LunaToon Unity BIRP]
+  unityUrp[LunaToon Unity URP]
   specs --> core
   specs --> features
   specs --> fragments
   core --> impl
   features --> impl
   fragments --> features
-  impl --> unity
+  impl --> unityBirp
+  impl --> unityUrp
 ```
 
 | Layer | Owns | Does not own |
 |-------|------|--------------|
-| `specs/core/` | Family rules: naming, `specVersion`, requirement voice, URP baseline | Pass lists, C#, Shader Graph assets |
+| `specs/core/` | Family rules: naming, `specVersion`, requirement voice, baseline hosts | Pass lists, C#, ShaderLab assets |
 | `specs/features/` | One capability per file (outline, shade, rim, …) | Host UI layout, package SemVer |
 | `specs/fragments/` | Shared property/schema pieces reused by features | Standalone shipping features |
 | `decisions/` | ADRs that lock product direction | Runtime code |
 | `implementations/` | Per-host capability notes and pins | Normative schema |
-| Code repos (e.g. LunaToon) | Shaders, C#, samples, CHANGELOG, UPM | Portable MUST/SHOULD/MAY contracts |
+| Code repos (e.g. LunaToon) | Dual ShaderLab entrypoints, shared HLSL, C#, samples, Editor UI, CHANGELOG, UPM | Portable MUST/SHOULD/MAY contracts |
 
 ## Specs vs code
 
@@ -54,19 +57,25 @@ flowchart TB
 | Property names, defaults, units, version bounds | Yes | Implements |
 | Lighting / outline / rim behavior contracts | Yes | Implements |
 | ADRs and host profiles | Yes | May link from README/docs |
-| HLSL, Shader Graph, materials, Editor UI | No | Yes |
+| BIRP/URP ShaderLab, shared HLSL, materials, Editor UI | No | Yes |
 | Package SemVer / CHANGELOG | No | Yes |
 
 Cross-links use GitHub URLs. Do not submodule this vault into the Unity project.
+
+Shader ownership for dual-pipeline sharing is handwritten HLSL with shared includes
+and pipeline-specific `.shader` entrypoints
+([dual-pipeline ADR](decisions/dual-pipeline-shader-assets.md)).
+Shared math includes SHOULD stay usable from Shader Graph Custom Function nodes
+when Graph samples exist; Graph does not replace the sibling ShaderLab ship path.
 
 ## Host map
 
 | Host | Profile | Notes |
 |------|---------|-------|
-| Unity 6 URP | [lunatoon-unity.md](implementations/lunatoon-unity.md) | Primary implementation; PC + Mobile renderer assets |
+| Unity 6 URP | [lunatoon-unity.md](implementations/lunatoon-unity.md) | Equal host; PC + Mobile URP renderer assets |
+| Unity BIRP | [lunatoon-unity.md](implementations/lunatoon-unity.md) | Equal host; pins TBD until measured |
 
 ## Open questions
 
 - Feature set for the first shading pass (outline, shade steps, rim, specular, matcap) — TBD.
-- Shader Graph vs handwritten HLSL ownership — TBD (record in `decisions/` when chosen).
 - UPM package split inside LunaToon vs monorepo host — TBD.

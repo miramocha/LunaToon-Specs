@@ -59,17 +59,24 @@ MUST be labeled non-normative when mixed into a feature doc.
 - Bumping `specVersion` for a breaking field change MUST include migration notes
   in that document (or a linked ADR).
 
-## Baseline host (informative)
+## Baseline hosts (informative)
 
-Primary development host pins (measured from [LunaToon](https://github.com/miramocha/LunaToon)):
+Baseline pins measured from [LunaToon](https://github.com/miramocha/LunaToon)
+and related Unity hosts. BIRP and URP are equal target pipelines
+([dual-pipeline ADR](../../decisions/dual-pipeline-shader-assets.md)).
 
-| Pin | Value |
-|-----|-------|
-| Unity Editor | `6000.3.7f1` |
-| URP | `17.3.0` |
+| Pipeline | Pin | Value |
+|----------|-----|-------|
+| URP | Unity Editor | `6000.3.7f1` |
+| URP | URP package | `17.3.0` |
+| BIRP | Unity Editor | TBD |
+| BIRP | Built-in RP | TBD |
 
 Feature specs MAY require a higher pin. They MUST state compatibility when they
-depend on a URP or Unity behavior beyond this baseline.
+depend on a Unity or render-pipeline behavior beyond this baseline.
+
+Feature specs that depend on pipeline-specific behavior MUST state BIRP and/or
+URP applicability.
 
 ## Unknown and future features
 

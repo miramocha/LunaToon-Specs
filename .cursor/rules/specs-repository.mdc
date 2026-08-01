@@ -1,0 +1,20 @@
+---
+description: LunaToon-Specs repository purpose and agent boundaries
+alwaysApply: true
+---
+
+# LunaToon-Specs repository
+
+- This repo is for **specifications and design decisions** for LunaToon — not Unity
+  project source and not shader implementation code.
+- Prefer documenting portable shading behavior, material contracts, compatibility, and
+  migration rules that Unity (and future hosts) can implement consistently.
+- Do not invent product scope, version history, or Unity/URP requirements.
+- Keep implementation details in the owning code repos unless the spec needs them to be
+  normative.
+- When naming concepts, reuse identifiers already established in LunaToon when those exist.
+- Treat repository standards as **unreleased drafts** unless a note explicitly states
+  otherwise. Do not constrain draft design around a hypothetical v1, release phase, or
+  post-release compatibility. Do not defer needed draft design to a later release without
+  explicit direction. Existing `specVersion` values describe draft schema revisions, not
+  released standards.

@@ -78,9 +78,11 @@ targets in one repo until a package split is decided
 | BIRP Forward | planned | Equal baseline pipeline; pins TBD |
 | PC URP renderer asset | present | Template default |
 | Mobile URP renderer asset | present | Template default |
-| Outline | TBD | Feature spec not written |
+| Outline | draft | Skeleton: [outline.md](../specs/features/outline.md); not implemented in repo |
 | Cel shade / steps | TBD | Feature spec not written |
-| Rim / specular / matcap | TBD | Feature spec not written |
+| Rim | draft | Skeleton: [rim.md](../specs/features/rim.md); not implemented in repo |
+| Specular | TBD | Feature spec not written |
+| Matcap | TBD | Feature spec not written |
 
 ## Related
 

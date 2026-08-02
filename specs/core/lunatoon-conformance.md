@@ -11,81 +11,86 @@ status: draft
 
 # LunaToon Conformance
 
-Family-wide requirements for LunaToon specs and conforming implementations.
-This document is not a single shading feature; feature contracts live under
-[`specs/features/`](../features/).
+Shared requirements for LunaToon feature specifications and conforming hosts.
+Concrete feature specs cite this document and define their own property
+contracts and `specVersion` values.
 
-## Purpose
-
-Define shared rules so feature specs stay consistent and hosts know what
-“conforming” means while the stack is still draft.
+This document is not a shading feature. It adds no material properties by itself.
 
 ## Scope
 
-| In scope | Out of scope |
-|----------|--------------|
-| Requirement strength, naming, `specVersion`, baseline host pins | Concrete outline/shade/rim field tables |
-| How unknown properties and future features interact | Unity package layout, asmdefs, samples |
-| Document placement for new normative notes | Third-party shader catalogs (lilToon, Poiyomi, …) |
+| Item | Value |
+|------|-------|
+| Target | LunaToon material contracts on Unity hosts (BIRP and URP) |
+| Applies to | Feature specs under `specs/features/` that cite this document |
+| Material interchange | Unity materials only (`Material` / ShaderLab property values) |
+| External schema | Out of scope for conformance (no glTF / standalone JSON material file) |
+| Serialized family object | none |
+| Baseline URP Editor | `6000.3.7f1` (from [LunaToon](https://github.com/miramocha/LunaToon)) |
+| Baseline URP package | `17.3.0` |
+| Baseline BIRP | TBD |
 
-## Requirement strength
+## Normative requirements
 
-Normative text MUST use:
+1. A conforming feature specification MUST live under `specs/features/<feature>.md`
+   and MUST be listed in the [README](../../README.md) Drafts table.
+2. Spec filenames MUST use kebab-case.
+3. A feature specification that defines a data contract SHOULD declare a
+   `specVersion` string. Values describe draft schema revisions, not released
+   product versions, unless the note explicitly states otherwise.
+4. Bumping `specVersion` for a breaking field change MUST include migration notes
+   in that document or a linked ADR.
+5. Material / shader property identifiers, once published in a feature spec, MUST
+   stay stable or ship an explicit migration note.
+6. Until a feature spec publishes property names, hosts MUST NOT treat ad-hoc
+   Unity property names as normative.
+7. A conforming host SHOULD ignore unknown LunaToon properties it does not
+   implement, unless a feature spec says otherwise.
+8. LunaToon material interchange MUST be Unity materials only: serialized Unity
+   `Material` / ShaderLab property values on a conforming host shader. Hosts
+   MUST NOT treat an external portable schema as part of LunaToon conformance.
+9. An external interchange format MAY be added later by a dedicated note and a
+   `specVersion` / migration story. Until then it is out of scope.
+10. LunaToon shading features SHOULD stay mappable to MToon 1.0-style materials
+    (VRM MToon / MToon10 capability shape): a host or tool SHOULD be able to
+    translate LunaToon authored look into MToon parameters (and the reverse where
+    the LunaToon feature set covers the MToon side) without inventing a second,
+    incompatible outline/rim/shade model.
+11. Mappability MUST NOT require a one-to-one property or unit match. LunaToon
+    MAY use different identifiers, defaults, ranges, or packing. A mapping MAY be
+    lossy (drop unsupported controls, clamp ranges, or supply documented defaults).
+12. Feature specs MUST NOT treat MToon ShaderLab names as normative LunaToon IDs.
+13. When a feature claims MToon-inspired shape, it SHOULD include a non-normative
+    role mapping table for authors and converters.
+14. Feature specs that depend on pipeline-specific behavior MUST state BIRP and/or
+    URP applicability. BIRP and URP are equal target pipelines
+    ([dual-pipeline ADR](../../decisions/dual-pipeline-shader-assets.md)).
+15. Feature specs MAY require a higher host pin than the baseline in Scope. They
+    MUST state compatibility when they depend on Unity or render-pipeline behavior
+    beyond that baseline.
+16. Exact MToon importer/exporter algorithms and VRM extension packaging are out
+    of scope here until a dedicated interchange note exists.
 
-| Keyword | Meaning |
-|---------|---------|
-| MUST | Absolute requirement for conformance |
-| SHOULD | Strong recommendation; deviation needs a documented reason |
-| MAY | Optional; hosts may omit |
+## Capability support
 
-Do not use soft marketing language in normative sections. Rationale and examples
-MUST be labeled non-normative when mixed into a feature doc.
+Support is declared per feature, not for LunaToon as a whole.
+A host claiming support for a feature MUST implement every normative requirement
+in that feature specification (and any fragments it cites).
 
-## Naming
+Partial support for a feature MUST be documented in the implementation profile.
+It MUST NOT be presented as full support for that feature.
 
-- Spec filenames MUST use kebab-case (e.g. `lunatoon-conformance.md`).
-- Feature specs MUST live under `specs/features/<feature>.md`.
-- Material / shader property identifiers, once published in a feature spec, MUST
-  stay stable or ship an explicit migration note.
-- Until a feature spec publishes property names, hosts MUST NOT treat ad-hoc
-  Unity property names as normative.
+## Versioning
 
-## `specVersion`
+While these drafts remain experimental, citations to this document stay
+unversioned. Feature specs still use their own `specVersion`.
 
-- Each normative feature or fragment that defines a data contract SHOULD declare
-  a `specVersion` string.
-- `specVersion` values describe **draft schema revisions**, not released product
-  versions, unless a note explicitly states otherwise.
-- Bumping `specVersion` for a breaking field change MUST include migration notes
-  in that document (or a linked ADR).
+Pinned conformance versions, and migration rules when those texts diverge, are
+future work. They do not block experimental use of the family rules above.
 
-## Baseline hosts (informative)
+## Related
 
-Baseline pins measured from [LunaToon](https://github.com/miramocha/LunaToon)
-and related Unity hosts. BIRP and URP are equal target pipelines
-([dual-pipeline ADR](../../decisions/dual-pipeline-shader-assets.md)).
-
-| Pipeline | Pin | Value |
-|----------|-----|-------|
-| URP | Unity Editor | `6000.3.7f1` |
-| URP | URP package | `17.3.0` |
-| BIRP | Unity Editor | TBD |
-| BIRP | Built-in RP | TBD |
-
-Feature specs MAY require a higher pin. They MUST state compatibility when they
-depend on a Unity or render-pipeline behavior beyond this baseline.
-
-Feature specs that depend on pipeline-specific behavior MUST state BIRP and/or
-URP applicability.
-
-## Unknown and future features
-
-- A conforming host SHOULD ignore unknown LunaToon properties it does not
-  implement, unless a feature spec says otherwise.
-- Adding a new feature MUST add a document under `specs/features/` and a row in
-  the [README](../../README.md) Drafts table.
-
-## Open questions
-
-- Portable material interchange format (Unity materials only vs external schema) — TBD.
-- Required vs optional feature matrix for “full” conformance — TBD.
+- [LunaToon Outline](../features/outline.md)
+- [LunaToon Rim](../features/rim.md)
+- [Dual-pipeline shader assets](../../decisions/dual-pipeline-shader-assets.md)
+- [LunaToon Unity](../../implementations/lunatoon-unity.md)

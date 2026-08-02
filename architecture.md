@@ -18,6 +18,8 @@ Cross-host layering guide for LunaToon. Normative field rules live in
 - Keep a portable shading and material contract that Unity (and future hosts) can implement.
 - Separate normative behavior from engine-specific shader code, inspectors, and packaging.
 - Support Unity BIRP and URP as equal hosts via sibling ShaderLab assets and shared HLSL.
+- Keep LunaToon looks mappable to MToon 1.0-style materials without requiring one-to-one
+  property parity ([conformance](specs/core/lunatoon-conformance.md#normative-requirements)).
 - Allow draft iteration without pretending a released standard exists yet.
 
 ## Layers
@@ -77,5 +79,9 @@ when Graph samples exist; Graph does not replace the sibling ShaderLab ship path
 
 ## Open questions
 
-- Feature set for the first shading pass (outline, shade steps, rim, specular, matcap) — TBD.
+- Feature set for the first shading pass: outline and rim have skeleton drafts
+  ([outline](specs/features/outline.md), [rim](specs/features/rim.md)); shade steps,
+  specular, and matcap remain TBD.
+- Required vs optional feature matrix for “full” host conformance — TBD.
+- Formal LunaToon ↔ MToon conversion tables (beyond feature role maps) — TBD.
 - UPM package split inside LunaToon vs monorepo host — TBD.

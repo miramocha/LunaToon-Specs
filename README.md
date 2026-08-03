@@ -39,6 +39,8 @@ Consumers:
 | Note | Topic | Status |
 |------|-------|--------|
 | [LunaToon Conformance](specs/core/lunatoon-conformance.md) | Shared family requirements, naming, `specVersion` | draft |
+| [LunaToon Outline](specs/features/outline.md) | Inverted-hull outline; width modes; skeleton fields | draft |
+| [LunaToon Rim](specs/features/rim.md) | Parametric N·V rim; lighting mix; skeleton fields | draft |
 
 Feature specs land under `specs/features/` (one file per shading capability).
 Reusable fragments land under `specs/fragments/`.
@@ -54,6 +56,7 @@ Reusable fragments land under `specs/fragments/`.
 | Note | Topic | Status |
 |------|-------|--------|
 | [Shader authoring pitfalls](references/shader-authoring-pitfalls.md) | Dual-pipeline and Thry/megashader anti-patterns (non-normative) | draft |
+| [Anime face SDF](references/anime-face-sdf.md) | Head-space SDF face shadow map research (non-normative) | draft |
 
 ## Archive
 

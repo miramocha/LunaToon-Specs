@@ -81,7 +81,8 @@ when Graph samples exist; Graph does not replace the sibling ShaderLab ship path
 
 - Feature set for the first shading pass: outline and rim have skeleton drafts
   ([outline](specs/features/outline.md), [rim](specs/features/rim.md)); shade steps,
-  specular, and matcap remain TBD.
+  specular, and matcap remain TBD. Head-space face SDF is researched in
+  [anime-face-sdf](references/anime-face-sdf.md); feature spec still TBD.
 - Required vs optional feature matrix for “full” host conformance — TBD.
 - Formal LunaToon ↔ MToon conversion tables (beyond feature role maps) — TBD.
 - UPM package split inside LunaToon vs monorepo host — TBD.

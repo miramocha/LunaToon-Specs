@@ -56,6 +56,7 @@ Reusable fragments land under `specs/fragments/`.
 | Note | Topic | Status |
 |------|-------|--------|
 | [Shader authoring pitfalls](references/shader-authoring-pitfalls.md) | Dual-pipeline and Thry/megashader anti-patterns (non-normative) | draft |
+| [Anime face SDF](references/anime-face-sdf.md) | Head-space SDF face shadow map research (non-normative) | draft |
 
 ## Archive
 
